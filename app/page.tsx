@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import './styles/style.css';
+import './styles/styles.css';
 import LoginStatus from '@/components/LoginStatus';
 import SummaryForm from '@/components/SummaryForm';
 
