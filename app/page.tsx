@@ -9,6 +9,7 @@ export default function HomePage() {
   const [summary, setSummary] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState<any>(null)
+  const [profile, setProfile] = useState<any>(null)
   const [charLimit, setCharLimit] = useState(1000)
 
   useEffect(() => {
@@ -17,15 +18,45 @@ export default function HomePage() {
       const sessionUser = data.session?.user
       setUser(sessionUser)
       setCharLimit(sessionUser ? Infinity : 1000)
+  
+      if (sessionUser) {
+        const { data: profileData, error } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', sessionUser.id)
+          .single()
+  
+        if (error) {
+          console.error('Error fetching profile:', error.message)
+        } else {
+          setProfile(profileData)
+        }
+      }
     }
+  
     getSession()
-
+  
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       const sessionUser = session?.user
       setUser(sessionUser)
       setCharLimit(sessionUser ? Infinity : 1000)
+  
+      if (sessionUser) {
+        supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', sessionUser.id)
+          .single()
+          .then(({ data: profileData, error }) => {
+            if (error) {
+              console.error('Error fetching profile:', error.message)
+            } else {
+              setProfile(profileData)
+            }
+          })
+      }
     })
-
+  
     return () => {
       authListener.subscription.unsubscribe()
     }
@@ -68,7 +99,12 @@ export default function HomePage() {
         </div>
         <div className="header-right">
           {user ? (
+            <>
+            <span className="welcome-text">
+              Welcome {profile?.full_name || user.email}!
+            </span>
             <button className="button" onClick={handleLogout}>Logout</button>
+            </>
           ) : (
             <button className="button" onClick={handleLogin}>Login with Google</button>
           )}
