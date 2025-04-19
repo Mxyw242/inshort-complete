@@ -1,6 +1,144 @@
+/* ---------- โทนสีพื้นหลังรวม ---------- */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff0f5; /* ชมพูอ่อน */
+  color: #333;
+}
+
+/* ---------- Header / Navbar ---------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #ff69b4; /* ชมพูสด */
+  color: white;
+  position: relative;
+}
+
+/* ---------- Header Sections ---------- */
+.header-left,
+.header-right {
+  flex: 0 0 auto;
+  min-width: 100px;
+}
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  text-align: center;
+}
+
+/* ---------- โลโก้ ---------- */
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* ---------- ชื่อ Summarizer ตรงกลาง ---------- */
+.nav-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+/* ---------- ปุ่มใน Header ---------- */
+.header-right .button {
+  background-color: white;
+  color: #ff69b4;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.header-right .button:hover {
+  background-color: #ffe4f0;
+}
+
+/* ---------- Container และเนื้อหา ---------- */
 .container {
+  max-width: 800px;
+  margin: 3rem auto;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+/* ---------- หัวข้อใน container ---------- */
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #ff69b4;
+}
+
+/* ---------- Textarea ---------- */
+.textarea {
+  width: 100%;
+  min-height: 220px;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.2s ease;
+}
+.textarea:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.2);
+}
+
+/* ---------- Char count ---------- */
+.char-count {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+/* ---------- ปุ่ม Submit ---------- */
+.button {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.button:hover {
+  background-color: #ff4da6;
+}
+
+/* ---------- Summary Box ---------- */
+.summary {
+  margin-top: 2rem;
+  background-color: #ffe4f9;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  border-left: 4px solid #ff69b4;
+}
+.summary h2 {
+  margin-top: 0;
+  color: #ff1493;
+  font-size: 1.2rem;
+}
+
+
+/* .container {
   max-width: 80%;
-  height: 800px;
+  height: 600px;
   margin: 4rem auto;
   padding: 2rem;
   background: #fff;
@@ -53,4 +191,4 @@
   background-color: #f1f1f1;
   padding: 1rem;
   border-radius: 8px;
-}
+} */

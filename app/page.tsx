@@ -60,35 +60,81 @@ export default function HomePage() {
   }
 
   return (
-    <div className="container">
-      <div className="header">
-        <h1 className="title">เครื่องมือสำหรับสรุปข้อความ</h1>
-        <div>
+    <>
+      <header className="header">
+        <div className="header-left">
+          <h1 className="logo">InShort</h1>
+        </div>
+        <div className="header-center">
+          <span className="nav-title">Summarizer</span>
+        </div>
+        <div className="header-right">
           {user ? (
             <button className="button" onClick={handleLogout}>Logout</button>
           ) : (
             <button className="button" onClick={handleLogin}>Login</button>
           )}
         </div>
-      </div>
+      </header>
 
-      <form onSubmit={handleSubmit}>
-        <textarea
-          className="textarea"
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          placeholder="กรุณาใส่ข้อความที่ต้องการสรุป..."
-        />
-        <p className="char-count">{inputText.length}{charLimit !== Infinity ? `/1000` : ''}</p>
-        <button className="button" disabled={isLoading}>Submit</button>
-      </form>
+      <main className="container">
+      <h2 className="title">เครื่องมือสำหรับสรุปข้อความ</h2>
+        <form onSubmit={handleSubmit}>
+          <textarea
+            className="textarea"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            placeholder="กรุณาใส่ข้อความที่ต้องการสรุป..."
+          />
+          <p className="char-count">
+            {inputText.length}
+            {charLimit !== Infinity ? '/1000' : ''}
+          </p>
+          <button className="button" disabled={isLoading}>
+            Summarize
+          </button>
+        </form>
 
-      {summary && (
-        <div className="summary">
-          <h2>สรุป:</h2>
-          <p>{summary}</p>
-        </div>
-      )}
-    </div>
+        {summary && (
+          <div className="summary">
+            <h2>สรุป:</h2>
+            <p>{summary}</p>
+          </div>
+        )}
+      </main>
+    </>
   )
 }
+//   return (
+//     <div className="container">
+//       <div className="header">
+//         <h1 className="title">เครื่องมือสำหรับสรุปข้อความ</h1>
+//         <div>
+//           {user ? (
+//             <button className="button" onClick={handleLogout}>Logout</button>
+//           ) : (
+//             <button className="button" onClick={handleLogin}>Login</button>
+//           )}
+//         </div>
+//       </div>
+
+//       <form onSubmit={handleSubmit}>
+//         <textarea
+//           className="textarea"
+//           value={inputText}
+//           onChange={(e) => setInputText(e.target.value)}
+//           placeholder="กรุณาใส่ข้อความที่ต้องการสรุป..."
+//         />
+//         <p className="char-count">{inputText.length}{charLimit !== Infinity ? `/1000` : ''}</p>
+//         <button className="button" disabled={isLoading}>Submit</button>
+//       </form>
+
+//       {summary && (
+//         <div className="summary">
+//           <h2>สรุป:</h2>
+//           <p>{summary}</p>
+//         </div>
+//       )}
+//     </div>
+//   )
+// }
