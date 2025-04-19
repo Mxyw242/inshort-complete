@@ -1,6 +1,5 @@
 'use client'
-import LoginButton from "@/components/LoginLogoutButton";
-import UserGreetText from "@/components/UserGreetText";
+
 import { useEffect, useState } from 'react'
 import { supabase } from '@/utils/supabaseClient'
 import './styles/styles.css'
@@ -80,7 +79,7 @@ export default function HomePage() {
           onChange={(e) => setInputText(e.target.value)}
           placeholder="กรุณาใส่ข้อความที่ต้องการสรุป..."
         />
-        <p className="char-count">{inputText.length}{charLimit !== Infinity ? `/500` : ''}</p>
+        <p className="char-count">{inputText.length}{charLimit !== Infinity ? `/1000` : ''}</p>
         <button className="button" disabled={isLoading}>Submit</button>
       </form>
 
