@@ -12,7 +12,6 @@ export default function HomePage() {
   const [charLimit, setCharLimit] = useState(1000)
 
   useEffect(() => {
-    // ตรวจสอบสถานะล็อกอิน
     const getSession = async () => {
       const { data } = await supabase.auth.getSession()
       const sessionUser = data.session?.user
@@ -21,7 +20,6 @@ export default function HomePage() {
     }
     getSession()
 
-    // subscribe login/logout
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       const sessionUser = session?.user
       setUser(sessionUser)
@@ -72,7 +70,7 @@ export default function HomePage() {
           {user ? (
             <button className="button" onClick={handleLogout}>Logout</button>
           ) : (
-            <button className="button" onClick={handleLogin}>Login</button>
+            <button className="button" onClick={handleLogin}>Login with Google</button>
           )}
         </div>
       </header>
@@ -105,36 +103,3 @@ export default function HomePage() {
     </>
   )
 }
-//   return (
-//     <div className="container">
-//       <div className="header">
-//         <h1 className="title">เครื่องมือสำหรับสรุปข้อความ</h1>
-//         <div>
-//           {user ? (
-//             <button className="button" onClick={handleLogout}>Logout</button>
-//           ) : (
-//             <button className="button" onClick={handleLogin}>Login</button>
-//           )}
-//         </div>
-//       </div>
-
-//       <form onSubmit={handleSubmit}>
-//         <textarea
-//           className="textarea"
-//           value={inputText}
-//           onChange={(e) => setInputText(e.target.value)}
-//           placeholder="กรุณาใส่ข้อความที่ต้องการสรุป..."
-//         />
-//         <p className="char-count">{inputText.length}{charLimit !== Infinity ? `/1000` : ''}</p>
-//         <button className="button" disabled={isLoading}>Submit</button>
-//       </form>
-
-//       {summary && (
-//         <div className="summary">
-//           <h2>สรุป:</h2>
-//           <p>{summary}</p>
-//         </div>
-//       )}
-//     </div>
-//   )
-// }

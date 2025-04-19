@@ -1,23 +1,20 @@
-/* ---------- โทนสีพื้นหลังรวม ---------- */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #fff0f5; /* ชมพูอ่อน */
+  background: #fff0f5;
   color: #333;
 }
 
-/* ---------- Header / Navbar ---------- */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background: #ff69b4; /* ชมพูสด */
+  background: #ff69b4;
   color: white;
   position: relative;
 }
 
-/* ---------- Header Sections ---------- */
 .header-left,
 .header-right {
   flex: 0 0 auto;
@@ -31,20 +28,17 @@ body {
   text-align: center;
 }
 
-/* ---------- โลโก้ ---------- */
 .logo {
   font-size: 1.8rem;
   font-weight: bold;
   margin: 0;
 }
 
-/* ---------- ชื่อ Summarizer ตรงกลาง ---------- */
 .nav-title {
   font-size: 1.25rem;
   font-weight: 500;
 }
 
-/* ---------- ปุ่มใน Header ---------- */
 .header-right .button {
   background-color: white;
   color: #ff69b4;
@@ -59,7 +53,6 @@ body {
   background-color: #ffe4f0;
 }
 
-/* ---------- Container และเนื้อหา ---------- */
 .container {
   max-width: 800px;
   margin: 3rem auto;
@@ -69,7 +62,6 @@ body {
   box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
-/* ---------- หัวข้อใน container ---------- */
 .title {
   font-size: 1.5rem;
   font-weight: 600;
@@ -78,7 +70,6 @@ body {
   color: #ff69b4;
 }
 
-/* ---------- Textarea ---------- */
 .textarea {
   width: 100%;
   min-height: 220px;
@@ -96,7 +87,6 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.2);
 }
 
-/* ---------- Char count ---------- */
 .char-count {
   text-align: right;
   font-size: 0.85rem;
@@ -104,7 +94,6 @@ body {
   margin-bottom: 1rem;
 }
 
-/* ---------- ปุ่ม Submit ---------- */
 .button {
   display: inline-block;
   padding: 0.6rem 1.5rem;
@@ -121,7 +110,6 @@ body {
   background-color: #ff4da6;
 }
 
-/* ---------- Summary Box ---------- */
 .summary {
   margin-top: 2rem;
   background-color: #ffe4f9;
@@ -134,61 +122,3 @@ body {
   color: #ff1493;
   font-size: 1.2rem;
 }
-
-
-/* .container {
-  max-width: 80%;
-  height: 600px;
-  margin: 4rem auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.title {
-  font-size: 1.5rem;
-}
-
-.button {
-  padding: 0.5rem 1rem;
-  background-color: #0070f3;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-}
-
-.button:hover {
-  background-color: #005ad1;
-}
-
-.textarea {
-  width: 100%;
-  height: 270px;
-  padding: 1rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-bottom: 0.5rem;
-}
-
-.char-count {
-  text-align: right;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.summary {
-  margin-top: 2rem;
-  background-color: #f1f1f1;
-  padding: 1rem;
-  border-radius: 8px;
-} */

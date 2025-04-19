@@ -2,7 +2,7 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
 
 interface Props {
-  wordLimit?: number; // ถ้า undefined = ไม่จำกัด
+  wordLimit?: number;
 }
 
 const SummaryForm: React.FC<Props> = ({ wordLimit }) => {
