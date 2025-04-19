@@ -2,7 +2,7 @@
 import LoginButton from "@/components/LoginLogoutButton";
 import UserGreetText from "@/components/UserGreetText";
 import { useEffect, useState } from 'react'
-import { supabase } from '@/utils/supabase/client'
+import { supabase } from '@/utils/supabaseClient'
 import './styles/styles.css'
 
 export default function HomePage() {
@@ -10,7 +10,7 @@ export default function HomePage() {
   const [summary, setSummary] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState<any>(null)
-  const [charLimit, setCharLimit] = useState(500)
+  const [charLimit, setCharLimit] = useState(1000)
 
   useEffect(() => {
     // ตรวจสอบสถานะล็อกอิน
@@ -18,7 +18,7 @@ export default function HomePage() {
       const { data } = await supabase.auth.getSession()
       const sessionUser = data.session?.user
       setUser(sessionUser)
-      setCharLimit(sessionUser ? Infinity : 500)
+      setCharLimit(sessionUser ? Infinity : 1000)
     }
     getSession()
 
@@ -26,7 +26,7 @@ export default function HomePage() {
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       const sessionUser = session?.user
       setUser(sessionUser)
-      setCharLimit(sessionUser ? Infinity : 500)
+      setCharLimit(sessionUser ? Infinity : 1000)
     })
 
     return () => {
@@ -36,8 +36,8 @@ export default function HomePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!user && inputText.length > 500) {
-      alert('กรุณาล็อกอินเพื่อใช้งานแบบไม่จำกัด')
+    if (!user && inputText.length > 1000) {
+      alert('*ข้อความเกิน 1000 คำ* กรุณาล็อกอินเพื่อใช้งานแบบไม่จำกัด')
       return
     }
 
@@ -80,7 +80,7 @@ export default function HomePage() {
           onChange={(e) => setInputText(e.target.value)}
           placeholder="กรุณาใส่ข้อความที่ต้องการสรุป..."
         />
-        <p className="char-count">{inputText.length}{charLimit !== Infinity ? `/500 ตัวอักษร` : ''}</p>
+        <p className="char-count">{inputText.length}{charLimit !== Infinity ? `/500` : ''}</p>
         <button className="button" disabled={isLoading}>Submit</button>
       </form>
 
