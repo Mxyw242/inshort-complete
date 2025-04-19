@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/utils/supabaseClient'
 import './styles/styles.css'
+import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
   const [inputText, setInputText] = useState('')
@@ -11,6 +12,7 @@ export default function HomePage() {
   const [user, setUser] = useState<any>(null)
   const [profile, setProfile] = useState<any>(null)
   const [charLimit, setCharLimit] = useState(1000)
+  const router = useRouter()
 
   useEffect(() => {
     const getSession = async () => {
@@ -77,6 +79,15 @@ export default function HomePage() {
     })
     const data = await response.json()
     setSummary(data.summary)
+    if (user) {
+      await supabase.from('summaries').insert([
+        {
+          user_id: user.id,
+          original_text: inputText,
+          summary: data.summary,
+        },
+      ])
+    }
     setIsLoading(false)
   }
 
@@ -124,9 +135,17 @@ export default function HomePage() {
             {inputText.length}
             {charLimit !== Infinity ? '/1000' : ''}
           </p>
+          <div className="button-row">
           <button className="button" disabled={isLoading}>
             Summarize
           </button>
+          {user && (
+            <button className="history-button" onClick={() => router.push('/history')}>
+              History
+            </button>
+          )}
+        </div>
+
         </form>
 
         {summary && (

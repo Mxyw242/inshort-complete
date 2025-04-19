@@ -128,3 +128,31 @@ body {
   color: #fff;
   font-weight: bold;
 }
+
+.history-button-wrapper {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.history-button {
+  background-color: #ff66b2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.history-button:hover {
+  background-color: #ff4d99;
+}
