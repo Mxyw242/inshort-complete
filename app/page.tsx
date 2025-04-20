@@ -26,7 +26,7 @@ export default function HomePage() {
           .from('profiles')
           .select('full_name')
           .eq('id', sessionUser.id)
-          .single()
+          .maybeSingle()
 
         if (error) {
           console.error('Error fetching profile:', error.message)
@@ -48,7 +48,7 @@ export default function HomePage() {
           .from('profiles')
           .select('full_name')
           .eq('id', sessionUser.id)
-          .single()
+          .maybeSingle()
           .then(({ data: profileData, error }) => {
             if (error) {
               console.error('Error fetching profile:', error.message)
@@ -122,6 +122,7 @@ export default function HomePage() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
+    router.push('/logout');
   }
 
   return (
@@ -161,15 +162,35 @@ export default function HomePage() {
             {charLimit !== Infinity ? '/1000' : ''}
           </p>
           <div className="button-row">
-            <button className="button" disabled={isLoading}>
-              Summarize
-            </button>
-            {user && (
-              <button className="history-button" onClick={() => router.push('/history')}>
-                History
+            <div className="button-left">
+              <button className="button" disabled={isLoading}>
+                Summarize
               </button>
+              <button
+                className="button"
+                type="button"
+                onClick={() => {
+                  setInputText('')
+                  setSummary('')
+                }}
+              >
+                Clear
+              </button>
+            </div>
+
+            {user && (
+              <div className="button-right">
+                <button
+                  className="history-button"
+                  type="button"
+                  onClick={() => router.push('/history')}
+                >
+                  History
+                </button>
+              </div>
             )}
           </div>
+
 
         </form>
 
