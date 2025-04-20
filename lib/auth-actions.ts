@@ -1,30 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
 import { createClient } from "@/utils/supabase/server";
 
-export async function login(formData: FormData) {
-  const supabase = createClient();
-
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
-
-  const { error } = await supabase.auth.signInWithPassword(data);
-
-  if (error) {
-    redirect("/error");
-  }
-
-  revalidatePath("/", "layout");
-  redirect("/");
-}
-
-
-export async function signout() {
+export async function signout() { // ออกจากระบบ แล้ว redirect ไป /logout
   const supabase = createClient();
   const { error } = await supabase.auth.signOut();
   if (error) {
@@ -35,7 +14,7 @@ export async function signout() {
   redirect("/logout");
 }
 
-export async function signInWithGoogle() {
+export async function signInWithGoogle() { // ล็อกอินด้วย Google OAuth
   const supabase = createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",

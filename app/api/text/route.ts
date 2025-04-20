@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Groq } from 'groq-sdk';
+import { Groq } from 'groq-sdk'; //ใช้ groq-sdk เรียก Groq AI
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  const { inputText }: { inputText: string } = await req.json();
+  const { inputText }: { inputText: string } = await req.json(); // รับ inputText จาก request
 
   const groq = new Groq({ apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY });
 
   try {
-    const chatCompletion = await groq.chat.completions.create({
+    const chatCompletion = await groq.chat.completions.create({ // ส่งข้อความที่รับมา ให้ AI สรุป แล้วส่งกลับเป็น JSON
       "messages": [
         {
           "role": "system",

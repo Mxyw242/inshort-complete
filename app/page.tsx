@@ -14,10 +14,10 @@ export default function HomePage() {
   const [charLimit, setCharLimit] = useState(1000)
   const router = useRouter()
 
-  useEffect(() => {
-    const getSession = async () => {
+  useEffect(() => { // เช็คว่า user ล็อกอินอยู่ไหม
+    const getSession = async () => { // ดึง session ว่าผู้ใช้ล็อกอินไหม
       const { data } = await supabase.auth.getSession()
-      const sessionUser = data.session?.user
+      const sessionUser = data.session?.user // จำกัดตัวอักษร 1000 ตัวถ้าไม่ได้ล็อกอิน
       setUser(sessionUser)
       setCharLimit(sessionUser ? Infinity : 1000)
 
@@ -35,7 +35,7 @@ export default function HomePage() {
     getSession()
 
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      const sessionUser = session?.user
+      const sessionUser = session?.user //ถ้ามีการล็อกอิน -> ไม่จำกัดตัวอักษร
       setUser(sessionUser)
       setCharLimit(sessionUser ? Infinity : 1000)
 
@@ -56,7 +56,7 @@ export default function HomePage() {
     }
   }, [])
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => { // ส่งข้อความไป /api/text เพื่อสรุป แล้วบันทึกลง Supabase (ถ้าล็อกอิน)
     e.preventDefault()
 
     if (!user && inputText.length > 1000) {
@@ -93,11 +93,11 @@ export default function HomePage() {
     setIsLoading(false)
   }
 
-  const handleLogin = async () => {
+  const handleLogin = async () => { // เรียก supabase.auth.signInWithOAuth ล็อกอินด้วย Google
     await supabase.auth.signInWithOAuth({ provider: 'google' })
   }
 
-  const handleLogout = async () => {
+  const handleLogout = async () => { // ออกจากระบบแล้วไปหน้า /logout
     await supabase.auth.signOut()
     router.push('/logout')
   }
