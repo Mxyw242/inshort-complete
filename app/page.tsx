@@ -86,9 +86,9 @@ export default function HomePage() {
     if (user) {
       const { error } = await supabase.from('summaries').insert([
         {
-          user_id: user.uuid, // Use user.id instead of user.uuid
+          user_id: user.id,
           original_text: inputText,
-          summary: data.summary, // Use data.summary directly
+          summary: data.summary,
         }
       ]);
       if (error) {
@@ -102,7 +102,7 @@ export default function HomePage() {
     if (user) {
       const { error } = await supabase.from('summaries').insert([
         {
-          user_id: user.uuid,
+          user_id: user.id,
           original_text: inputText,
           summary: summary,
         }
