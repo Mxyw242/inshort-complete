@@ -20,14 +20,14 @@ export default function HomePage() {
       const sessionUser = data.session?.user
       setUser(sessionUser)
       setCharLimit(sessionUser ? Infinity : 1000)
-  
+
       if (sessionUser) {
         const { data: profileData, error } = await supabase
           .from('profiles')
           .select('full_name')
           .eq('id', sessionUser.id)
           .single()
-  
+
         if (error) {
           console.error('Error fetching profile:', error.message)
         } else {
@@ -35,14 +35,14 @@ export default function HomePage() {
         }
       }
     }
-  
+
     getSession()
-  
+
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       const sessionUser = session?.user
       setUser(sessionUser)
       setCharLimit(sessionUser ? Infinity : 1000)
-  
+
       if (sessionUser) {
         supabase
           .from('profiles')
@@ -58,38 +58,63 @@ export default function HomePage() {
           })
       }
     })
-  
+
     return () => {
       authListener.subscription.unsubscribe()
     }
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+
     if (!user && inputText.length > 1000) {
-      alert('*ข้อความเกิน 1000 คำ* กรุณาล็อกอินเพื่อใช้งานแบบไม่จำกัด')
-      return
+      alert('*ข้อความเกิน 1000 คำ* กรุณาล็อกอินเพื่อใช้งานแบบไม่จำกัด');
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
+
     const response = await fetch('/api/text', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ inputText }),
-    })
-    const data = await response.json()
-    setSummary(data.summary)
+    });
+
+    const data = await response.json();
+    setSummary(data.summary);
+
     if (user) {
-      await supabase.from('summaries').insert([
+      const { error } = await supabase.from('summaries').insert([
         {
-          user_id: user.id,
+          user_id: user.uuid, // Use user.id instead of user.uuid
           original_text: inputText,
-          summary: data.summary,
-        },
-      ])
+          summary: data.summary, // Use data.summary directly
+        }
+      ]);
+      if (error) {
+        console.error('Error saving summary:', error.message);
+      } else {
+        console.log('Summary saved to Supabase');
+      }
     }
-    setIsLoading(false)
+
+    setIsLoading(false);
+    if (user) {
+      const { error } = await supabase.from('summaries').insert([
+        {
+          user_id: user.uuid,
+          original_text: inputText,
+          summary: summary,
+        }
+      ])
+      if (error) {
+        console.error('Error saving summary:', error.message)
+      } else {
+        console.log('Summary saved to Supabase')
+      }
+    }
   }
+
 
   const handleLogin = async () => {
     await supabase.auth.signInWithOAuth({ provider: 'google' })
@@ -111,10 +136,10 @@ export default function HomePage() {
         <div className="header-right">
           {user ? (
             <>
-            <span className="welcome-text">
-              Welcome {profile?.full_name || user.email}!
-            </span>
-            <button className="button" onClick={handleLogout}>Logout</button>
+              <span className="welcome-text">
+                Welcome {profile?.full_name || user.email}!
+              </span>
+              <button className="button" onClick={handleLogout}>Logout</button>
             </>
           ) : (
             <button className="button" onClick={handleLogin}>Login with Google</button>
@@ -123,7 +148,7 @@ export default function HomePage() {
       </header>
 
       <main className="container">
-      <h2 className="title">เครื่องมือสำหรับสรุปข้อความ</h2>
+        <h2 className="title">เครื่องมือสำหรับสรุปข้อความ</h2>
         <form onSubmit={handleSubmit}>
           <textarea
             className="textarea"
@@ -136,15 +161,15 @@ export default function HomePage() {
             {charLimit !== Infinity ? '/1000' : ''}
           </p>
           <div className="button-row">
-          <button className="button" disabled={isLoading}>
-            Summarize
-          </button>
-          {user && (
-            <button className="history-button" onClick={() => router.push('/history')}>
-              History
+            <button className="button" disabled={isLoading}>
+              Summarize
             </button>
-          )}
-        </div>
+            {user && (
+              <button className="history-button" onClick={() => router.push('/history')}>
+                History
+              </button>
+            )}
+          </div>
 
         </form>
 
