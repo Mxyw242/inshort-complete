@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
+import { useRouter } from 'next/navigation';
+
 
 type Summary = {
   id: string;
@@ -13,6 +15,7 @@ type Summary = {
 export default function HistoryPage() {
   const [summaries, setSummaries] = useState<Summary[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchSummaries = async () => {
@@ -58,7 +61,26 @@ export default function HistoryPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Your Summaries</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Your Summaries</h1>
+        <button
+          onClick={() => router.push('/')}
+          className="
+            inline-block
+            px-6 py-2.5
+            bg-pink-400 hover:bg-pink-500
+            text-white
+            rounded-full
+            text-base
+            font-medium
+            cursor-pointer
+            transition-colors duration-200
+  "
+        >
+          Go Back
+        </button>
+      </div>
+
       {loading ? (
         <p>Loading...</p>
       ) : summaries.length === 0 ? (
