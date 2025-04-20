@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/utils/supabaseClient'
 import './styles/styles.css'
 import { useRouter } from 'next/navigation'
+import type { User } from '@supabase/supabase-js'
 
 export default function HomePage() {
   const [inputText, setInputText] = useState('')
   const [summary, setSummary] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [user, setUser] = useState<any>(null)
-  const [profile, setProfile] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
+  const [profile, setProfile] = useState<Profile | null>(null)
   const [charLimit, setCharLimit] = useState(1000)
   const router = useRouter()
 
@@ -18,7 +19,7 @@ export default function HomePage() {
     const getSession = async () => { // ดึง session ว่าผู้ใช้ล็อกอินไหม
       const { data } = await supabase.auth.getSession()
       const sessionUser = data.session?.user // จำกัดตัวอักษร 1000 ตัวถ้าไม่ได้ล็อกอิน
-      setUser(sessionUser)
+      setUser(sessionUser ?? null)
       setCharLimit(sessionUser ? Infinity : 1000)
 
       if (sessionUser) {
@@ -36,7 +37,7 @@ export default function HomePage() {
 
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       const sessionUser = session?.user //ถ้ามีการล็อกอิน -> ไม่จำกัดตัวอักษร
-      setUser(sessionUser)
+      setUser(sessionUser ?? null)
       setCharLimit(sessionUser ? Infinity : 1000)
 
       if (sessionUser) {
