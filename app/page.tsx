@@ -11,6 +11,9 @@ export default function HomePage() {
   const [summary, setSummary] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState<User | null>(null)
+  type Profile = {
+    full_name: string
+  }
   const [profile, setProfile] = useState<Profile | null>(null)
   const [charLimit, setCharLimit] = useState(1000)
   const router = useRouter()
