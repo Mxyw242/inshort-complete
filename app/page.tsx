@@ -115,7 +115,7 @@ export default function HomePage() {
           {user ? (
             <>
               <span className="welcome-text">
-              Welcome {profile?.full_name || user.user_metadata.full_name || user.email}!
+                Welcome {profile?.full_name || user.user_metadata.full_name || user.email}!
               </span>
               <button className="button" onClick={handleLogout}>
                 Logout
@@ -126,6 +126,9 @@ export default function HomePage() {
               Login with Google
             </button>
           )}
+
+          <div className="flower-background" />
+
         </div>
       </header>
 
