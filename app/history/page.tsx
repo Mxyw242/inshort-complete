@@ -23,11 +23,13 @@ export default function HistoryPage() {
 
       if (userError) {
         console.error('Error getting user:', userError.message);
+        setLoading(false);
         return;
       }
 
       if (!user) {
-        console.warn('🔒 No user found. Are you logged in?');
+        console.warn('No user found. Are you logged in?');
+        setLoading(false);
         return;
       }
 
@@ -44,8 +46,11 @@ export default function HistoryPage() {
         alert('Failed to fetch summaries. Please try again later.');
       } else {
         console.log('Fetched summaries:', data);
-        setSummaries(data);
+        setSummaries(data || []);
       }
+
+      setLoading(false);
+
     };
 
     fetchSummaries();
