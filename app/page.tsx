@@ -28,11 +28,7 @@ export default function HomePage() {
           .eq('id', sessionUser.id)
           .maybeSingle()
 
-        if (error) {
-          console.error('Error fetching profile:', error.message)
-        } else {
-          setProfile(profileData)
-        }
+        if (!error) setProfile(profileData)
       }
     }
 
@@ -49,12 +45,8 @@ export default function HomePage() {
           .select('full_name')
           .eq('id', sessionUser.id)
           .maybeSingle()
-          .then(({ data: profileData, error }) => {
-            if (error) {
-              console.error('Error fetching profile:', error.message)
-            } else {
-              setProfile(profileData)
-            }
+          .then(({ data, error }) => {
+            if (!error) setProfile(data)
           })
       }
     })
@@ -65,56 +57,41 @@ export default function HomePage() {
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!user && inputText.length > 1000) {
-      alert('*ข้อความเกิน 1000 คำ* กรุณาล็อกอินเพื่อใช้งานแบบไม่จำกัด');
-      return;
+      alert('*ข้อความเกิน 1000 คำ* กรุณาล็อกอินเพื่อใช้งานแบบไม่จำกัด')
+      return
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
 
-    const response = await fetch('/api/text', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ inputText }),
-    });
+    try {
+      const response = await fetch('/api/text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ inputText }),
+      })
 
-    const data = await response.json();
-    setSummary(data.summary);
+      const data = await response.json()
+      setSummary(data.summary)
 
-    if (user) {
-      const { error } = await supabase.from('summaries').insert([
-        {
-          user_id: user.id,
-          original_text: inputText,
-          summary: data.summary,
-        }
-      ]);
-      if (error) {
-        console.error('Error saving summary:', error.message);
-      } else {
-        console.log('Summary saved to Supabase');
+      if (user) {
+        const { error } = await supabase.from('summaries').insert([
+          {
+            user_id: user.id,
+            original_text: inputText,
+            summary: data.summary,
+          }
+        ])
+        if (error) console.error('Error saving summary:', error.message)
       }
+    } catch (error) {
+      console.error('Summarization failed:', error)
     }
 
-    setIsLoading(false);
-    if (user) {
-      const { error } = await supabase.from('summaries').insert([
-        {
-          user_id: user.id,
-          original_text: inputText,
-          summary: summary,
-        }
-      ])
-      if (error) {
-        console.error('Error saving summary:', error.message)
-      } else {
-        console.log('Summary saved to Supabase')
-      }
-    }
+    setIsLoading(false)
   }
-
 
   const handleLogin = async () => {
     await supabase.auth.signInWithOAuth({ provider: 'google' })
@@ -122,7 +99,7 @@ export default function HomePage() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
-    router.push('/logout');
+    router.push('/logout')
   }
 
   return (
@@ -140,16 +117,21 @@ export default function HomePage() {
               <span className="welcome-text">
                 Welcome {profile?.full_name || user.email}!
               </span>
-              <button className="button" onClick={handleLogout}>Logout</button>
+              <button className="button" onClick={handleLogout}>
+                Logout
+              </button>
             </>
           ) : (
-            <button className="button" onClick={handleLogin}>Login with Google</button>
+            <button className="button" onClick={handleLogin}>
+              Login with Google
+            </button>
           )}
         </div>
       </header>
 
       <main className="container">
         <h2 className="title">เครื่องมือสำหรับสรุปข้อความ</h2>
+
         <form onSubmit={handleSubmit}>
           <textarea
             className="textarea"
@@ -161,10 +143,11 @@ export default function HomePage() {
             {inputText.length}
             {charLimit !== Infinity ? '/1000' : ''}
           </p>
+
           <div className="button-row">
             <div className="button-left">
               <button className="button" disabled={isLoading}>
-                Summarize
+                {isLoading ? 'กำลังสรุป...' : 'Summarize'}
               </button>
               <button
                 className="button"
@@ -190,15 +173,13 @@ export default function HomePage() {
               </div>
             )}
           </div>
-
-
         </form>
 
         {summary && (
-          <div className="summary">
+          <section className="summary">
             <h2>สรุป:</h2>
             <p>{summary}</p>
-          </div>
+          </section>
         )}
       </main>
     </>

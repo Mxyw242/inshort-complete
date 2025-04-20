@@ -9,10 +9,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1.2rem 2rem;
   background: #ff69b4;
   color: white;
   position: relative;
+  border-bottom: 4px solid #ffe4f9;
 }
 
 .header-left,
@@ -20,23 +21,26 @@ body {
   flex: 0 0 auto;
   min-width: 100px;
 }
+
 .header-center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  pointer-events: none;
   text-align: center;
+  font-weight: 500;
 }
 
 .logo {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: bold;
   margin: 0;
+  letter-spacing: 1px;
 }
 
 .nav-title {
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 400;
+  opacity: 0.95;
 }
 
 .header-right .button {
@@ -49,21 +53,22 @@ body {
   cursor: pointer;
   transition: background 0.2s ease;
 }
+
 .header-right .button:hover {
-  background-color: #ffe4f0;
+  background-color: #ffe4f9;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 760px;
   margin: 3rem auto;
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 24px rgba(255, 105, 180, 0.08);
 }
 
 .title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
   text-align: center;
@@ -72,26 +77,26 @@ body {
 
 .textarea {
   width: 100%;
-  min-height: 220px;
+  min-height: 200px;
   padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  border-radius: 10px;
+  border: 1px solid #ddd;
   resize: vertical;
   font-size: 1rem;
-  margin-bottom: 0.5rem;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
 .textarea:focus {
   outline: none;
   border-color: #ff69b4;
-  box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.2);
+  box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
 }
 
 .char-count {
   text-align: right;
   font-size: 0.85rem;
-  color: #666;
-  margin-bottom: 1rem;
+  color: #777;
+  margin-top: 0.5rem;
 }
 
 .button {
@@ -106,39 +111,46 @@ body {
   cursor: pointer;
   transition: background 0.2s ease;
 }
+
 .button:hover {
   background-color: #ff4da6;
 }
 
 .summary {
   margin-top: 2rem;
-  background-color: #ffe4f9;
-  padding: 1rem 1.25rem;
-  border-radius: 8px;
+  background-color: #fff5fa;
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
   border-left: 4px solid #ff69b4;
 }
+
 .summary h2 {
   margin-top: 0;
   color: #ff1493;
   font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .welcome-text {
   margin-right: 1rem;
   color: #fff;
-  font-weight: bold;
-}
-
-.history-button-wrapper {
-  text-align: right;
-  margin-top: 10px;
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .button-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.button-left,
+.button-right {
+  display: flex;
+  gap: 0.75rem;
 }
 
 .history-button {
@@ -155,19 +167,4 @@ body {
 
 .history-button:hover {
   background-color: #ff4d99;
-}
-
-.button-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.button-left,
-.button-right {
-  display: flex;
-  gap: 0.75rem;
 }

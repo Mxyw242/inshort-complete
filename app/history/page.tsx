@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
 import { useRouter } from 'next/navigation';
 
-
 type Summary = {
   id: string;
   original_text: string;
@@ -36,8 +35,6 @@ export default function HistoryPage() {
         return;
       }
 
-      console.log('Logged in as:', user.id);
-
       const { data, error } = await supabase
         .from('summaries')
         .select('*')
@@ -48,7 +45,6 @@ export default function HistoryPage() {
         console.error('Error fetching summaries:', error);
         alert('Failed to fetch summaries. Please try again later.');
       } else {
-        console.log('Fetched summaries:', data);
         const filteredData = (data || []).filter(
           (item) => item.summary && item.summary.trim() !== ''
         );
@@ -56,48 +52,58 @@ export default function HistoryPage() {
       }
 
       setLoading(false);
-
     };
 
     fetchSummaries();
   }, []);
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Your Summaries</h1>
+    <div className="min-h-screen bg-[#fff0f5] p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-[#ff69b4]">📝 ประวัติการสรุปข้อความ</h1>
         <button
           onClick={() => router.push('/')}
           className="
             inline-block
             px-6 py-2.5
-            bg-pink-400 hover:bg-pink-500
+            bg-[#ff69b4] hover:bg-[#ff4da6]
             text-white
             rounded-full
             text-base
             font-medium
             cursor-pointer
             transition-colors duration-200
-  "
+          "
         >
-          Go Back
+          ⬅ Go Back
         </button>
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-[#ff69b4]">Loading...</p>
       ) : summaries.length === 0 ? (
-        <p>ยังไม่มีประวัติการสรุปข้อความ</p>
+        <p className="text-gray-600">ยังไม่มีประวัติการสรุปข้อความ</p>
       ) : (
-        summaries.map((summary) => (
-          <div key={summary.id} className="mb-4 p-4 bg-white rounded shadow">
-            <p><strong>Original:</strong> {summary.original_text}</p>
-            <p><strong>Summary:</strong> {summary.summary}</p>
-            <p className="text-sm text-gray-500">
-              Created at: {new Date(summary.created_at).toLocaleString()}
-            </p>
-          </div>
-        ))
+        <div className="grid gap-4">
+          {summaries.map((summary) => (
+            <div
+              key={summary.id}
+              className="bg-white rounded-2xl shadow-md p-5 border-l-4 border-[#ff69b4]"
+            >
+              <p className="mb-2 text-gray-800">
+                <span className="font-semibold text-[#ff69b4]">Original:</span>{' '}
+                {summary.original_text}
+              </p>
+              <p className="mb-2 text-gray-800">
+                <span className="font-semibold text-[#ff69b4]">Summary:</span>{' '}
+                {summary.summary}
+              </p>
+              <p className="text-sm text-gray-400">
+                📅 {new Date(summary.created_at).toLocaleString()}
+              </p>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
