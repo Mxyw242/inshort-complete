@@ -49,7 +49,10 @@ export default function HistoryPage() {
         alert('Failed to fetch summaries. Please try again later.');
       } else {
         console.log('Fetched summaries:', data);
-        setSummaries(data || []);
+        const filteredData = (data || []).filter(
+          (item) => item.summary && item.summary.trim() !== ''
+        );
+        setSummaries(filteredData);
       }
 
       setLoading(false);
