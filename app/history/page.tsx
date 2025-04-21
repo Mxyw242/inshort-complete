@@ -17,7 +17,7 @@ export default function HistoryPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchSummaries = async () => { // ดึงข้อมูลสรุปจาก Supabase
+    const fetchSummaries = async () => {
       const {
         data: { user },
         error: userError,

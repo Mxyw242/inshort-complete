@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 const LogoutPage = () => {
   const router = useRouter();
-  // setTimeout ให้เปลี่ยนเส้นทาง หลังจากนั้น 2s จะ redirect กลับไป "/"
   useEffect(() => {
     setTimeout(() => router.push("/"), 2000);
   }, []);

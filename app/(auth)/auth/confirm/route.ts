@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 import { createClient } from '@/utils/supabase/server'
 
-export async function GET(request: NextRequest) { //ตรวจสอบ token_hash และ type ที่ได้จาก URL
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const token_hash = searchParams.get('token_hash')
   const type = searchParams.get('type') as EmailOtpType | null
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) { //ตรวจสอบ token_
   redirectTo.searchParams.delete('token_hash')
   redirectTo.searchParams.delete('type')
 
-  if (token_hash && type) { // เรียก Supabase auth.verifyOtp() เพื่อยืนยัน OTP
+  if (token_hash && type) {
     const supabase = createClient()
 
     const { error } = await supabase.auth.verifyOtp({
@@ -22,11 +22,11 @@ export async function GET(request: NextRequest) { //ตรวจสอบ token_
       token_hash,
     })
     if (!error) {
-      redirectTo.searchParams.delete('next') // ถ้าสำเร็จ → ไปหน้า next
+      redirectTo.searchParams.delete('next')
       return NextResponse.redirect(redirectTo)
     }
   }
 
-  redirectTo.pathname = '/error' // ถ้าล้มเหลว → ไปหน้า error
+  redirectTo.pathname = '/error'
   return NextResponse.redirect(redirectTo)
 }
