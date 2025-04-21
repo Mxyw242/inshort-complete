@@ -1,7 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-// sync session ของ user จาก cookie เข้า server-side Supabase ถ้า user logout, cookie จะเคลียร์ให้ด้วย
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: {

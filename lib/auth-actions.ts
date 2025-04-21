@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
-export async function signout() { // ออกจากระบบ แล้ว redirect ไป /logout
+export async function signout() {
   const supabase = createClient();
   const { error } = await supabase.auth.signOut();
   if (error) {
@@ -14,7 +14,7 @@ export async function signout() { // ออกจากระบบ แล้ว
   redirect("/logout");
 }
 
-export async function signInWithGoogle() { // ล็อกอินด้วย Google OAuth
+export async function signInWithGoogle() {
   const supabase = createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",

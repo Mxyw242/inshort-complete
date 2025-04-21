@@ -5,7 +5,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const { inputText }: { inputText: string } = await req.json();
 
   const groq = new Groq({ apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY });
-
   try {
     const chatCompletion = await groq.chat.completions.create({
       "messages": [
